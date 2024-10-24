@@ -1,10 +1,30 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: azure-fileshare-pvc
+  name: my-azurefile-pvc
+  namespace: mri
 spec:
   accessModes:
     - ReadWriteMany
+  storageClassName: azurefile
   resources:
     requests:
-      storage: 10Gi 
+      storage: 5Gi
+  volumeMode: Filesystem
+  volumeName: my-azurefile-volume
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: my-azurefile-volume
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany
+  azureFile:
+    secretName: azure-fileshare-secret  # Ensure this secret name is correct
+    shareName: testmriaks
+    readOnly: false
+  storageClassName: azurefile
