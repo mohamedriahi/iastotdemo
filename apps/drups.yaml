@@ -29,5 +29,5 @@ spec:
       - name: azure-fileshare
         azureFile:
           secretName: azure-fileshare-secret
-          shareName: ""   
+          shareName: "testmriaks"   
           readOnly: false
