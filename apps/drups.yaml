@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mridrup
+  labels:
+    app: drupal
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: drupal
+  template:
+    metadata:
+      labels:
+        app: drupal
+    spec:
+      containers:
+      - name: drupal
+        image: drupal:latest
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: drupal-config
+        volumeMounts:
+        - name: azure-fileshare
+          mountPath: /var/www/html
+      volumes:
+      - name: azure-fileshare
+        azureFile:
+          secretName: azure-fileshare-secret
+          shareName: ""   
+          readOnly: false
