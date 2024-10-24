@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: mridrup
   labels:
-    app: drupal
+    app: dru
 spec:
   replicas: 1
   selector:
